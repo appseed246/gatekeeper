@@ -7,7 +7,11 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.create(
       name: params[:name],
-      age: params[:age]
+      age: params[:age],
+      gender: params[:gender],
+      enrollment_status: params[:enrollment_status],
+      authority: params[:authority],
+      department: params[:department]
     )
     render json: @employee
   end
