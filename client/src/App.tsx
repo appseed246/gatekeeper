@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import axios from "axios";
+import SampleComponent from "./components/SampleComponents";
+import Header from "./components/Header";
 
 type ProductResponse = {
   id: number;
@@ -25,7 +27,7 @@ const useResponse = () => {
   return data;
 };
 
-const App: React.FC = () => {
+function FetchTestComponent() {
   const products = useResponse();
   return (
     <div className="App">
@@ -48,6 +50,10 @@ const App: React.FC = () => {
       </header>
     </div>
   );
+}
+
+const App: React.FC = () => {
+  return <Header />;
 };
 
 export default App;
