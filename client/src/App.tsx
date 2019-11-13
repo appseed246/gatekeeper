@@ -4,6 +4,7 @@ import "./App.css";
 import axios from "axios";
 import SampleComponent from "./components/SampleComponents";
 import Header from "./components/Header";
+import TablePaginationAction from "./components/CustomPaginationActionsTable";
 
 type ProductResponse = {
   id: number;
@@ -53,7 +54,12 @@ function FetchTestComponent() {
 }
 
 const App: React.FC = () => {
-  return <Header />;
+  return (
+    <div>
+      <Header />
+      <TablePaginationAction />
+    </div>
+  );
 };
 
 export default App;
