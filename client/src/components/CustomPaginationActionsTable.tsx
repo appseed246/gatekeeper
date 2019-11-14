@@ -13,7 +13,8 @@ import {
   TableRow,
   TableCell,
   TableFooter,
-  TablePagination
+  TablePagination,
+  TableHead
 } from "@material-ui/core";
 import FirstPageIcon from "@material-ui/icons/FirstPage";
 import LastPageIcon from "@material-ui/icons/LastPage";
@@ -28,6 +29,20 @@ const useStyles1 = makeStyles((theme: Theme) =>
     }
   })
 );
+
+interface Column {
+  id: "name" | "calories" | "fat";
+  label: string;
+  minWidth?: number;
+  align?: "right";
+  format?: (value: number) => string;
+}
+
+const columns: Column[] = [
+  { id: "name", label: "Name", minWidth: 170 },
+  { id: "calories", label: "Calories", minWidth: 100, align: "right" },
+  { id: "fat", label: "Fat", minWidth: 100, align: "right" }
+];
 
 interface TablePaginationActionsProps {
   count: number;
@@ -168,6 +183,19 @@ export default function CustomPaginationActionsTable() {
     <Paper className={classes.root}>
       <div className={classes.tableWrapper}>
         <Table className={classes.table} aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>
+              {columns.map(column => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
           <TableBody>
             {(rowsPerPage > 0
               ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
