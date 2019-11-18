@@ -97,8 +97,8 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
         {theme.direction === "rtl" ? (
           <KeyboardArrowRight />
         ) : (
-          <KeyboardArrowLeft />
-        )}
+            <KeyboardArrowLeft />
+          )}
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
@@ -108,8 +108,8 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
         {theme.direction === "rtl" ? (
           <KeyboardArrowLeft />
         ) : (
-          <KeyboardArrowRight />
-        )}
+            <KeyboardArrowRight />
+          )}
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
@@ -145,8 +145,10 @@ const rows = [
 const useStyles2 = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: "100%",
-      marginTop: theme.spacing(3)
+      width: "80%",
+      marginTop: theme.spacing(3),
+      marginLeft: "auto",
+      marginRight: "auto"
     },
     table: {
       minWidth: 500
@@ -189,7 +191,7 @@ export default function CustomPaginationActionsTable() {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={{ minWidth: column.minWidth, fontWeight: "bold" }}
                 >
                   {column.label}
                 </TableCell>
@@ -201,7 +203,7 @@ export default function CustomPaginationActionsTable() {
               ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               : rows
             ).map(row => (
-              <TableRow key={row.name}>
+              <TableRow key={row.name} hover>
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
