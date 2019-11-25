@@ -20,6 +20,7 @@ import FirstPageIcon from "@material-ui/icons/FirstPage";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import SearchBar from "./SearchBar";
 
 const useStyles1 = makeStyles((theme: Theme) =>
   createStyles({
@@ -97,8 +98,8 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
         {theme.direction === "rtl" ? (
           <KeyboardArrowRight />
         ) : (
-            <KeyboardArrowLeft />
-          )}
+          <KeyboardArrowLeft />
+        )}
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
@@ -108,8 +109,8 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
         {theme.direction === "rtl" ? (
           <KeyboardArrowLeft />
         ) : (
-            <KeyboardArrowRight />
-          )}
+          <KeyboardArrowRight />
+        )}
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
@@ -163,6 +164,8 @@ export default function CustomPaginationActionsTable() {
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  // 検索単語
+  const [searchWord, setSearchWord] = React.useState("");
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -181,8 +184,15 @@ export default function CustomPaginationActionsTable() {
     setPage(0);
   };
 
+  const handleChangeField = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setSearchWord(event.target.value);
+  };
+
   return (
     <Paper className={classes.root}>
+      <SearchBar onChangeField={handleChangeField} />
       <div className={classes.tableWrapper}>
         <Table className={classes.table} aria-label="custom pagination table">
           <TableHead>
@@ -202,15 +212,17 @@ export default function CustomPaginationActionsTable() {
             {(rowsPerPage > 0
               ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               : rows
-            ).map(row => (
-              <TableRow key={row.name} hover>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-              </TableRow>
-            ))}
+            )
+              .filter(row => row.name.startsWith(searchWord))
+              .map(row => (
+                <TableRow key={row.name} hover>
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="right">{row.calories}</TableCell>
+                  <TableCell align="right">{row.fat}</TableCell>
+                </TableRow>
+              ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>
                 <TableCell colSpan={6} />
